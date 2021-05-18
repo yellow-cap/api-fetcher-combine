@@ -1,17 +1,19 @@
 import Foundation
 import Combine
 
+protocol IExampleFetcher {
+    func fetchExamples() -> AnyPublisher<[ExampleModel], ApiError>
+}
 class ExampleFetcher {
     private let fetcher: IApiFetcher
     private let decoder: JSONDecoder
-    private var dataTaskPublishers = Set<AnyCancellable>()
 
     init(fetcher: IApiFetcher) {
         self.fetcher = fetcher
         decoder = .init()
     }
 
-    func fetchExample() throws -> AnyPublisher<[ExampleModel], ApiError> {
+    func fetchExamples() throws -> AnyPublisher<[ExampleModel], ApiError> {
         let timeStamp = NSDate().timeIntervalSince1970
 
             return try fetcher.request(

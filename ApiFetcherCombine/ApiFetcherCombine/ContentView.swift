@@ -1,24 +1,16 @@
-//
-//  ContentView.swift
-//  ApiFetcherCombine
-//
-//  Created by Artem on 18.05.2021.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    let fetcher = ExampleFetcher(fetcher: ApiFetcher())
+    @ObservedObject var viewModel: ContentViewModel = ContentViewModel(
+            exampleFetcher: ExampleFetcher(
+                    fetcher: ApiFetcher()
+            )
+    )
 
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Text(viewModel.examples.isEmpty ? "Loading..." : "Loaded")
                 .onAppear {
-                    do {
-                        try fetcher.fetchExample()
-                    } catch {
-                        print("Error on view: \(error)")
-                    }
+                    viewModel.fetchExamples()
                 }
     }
 }

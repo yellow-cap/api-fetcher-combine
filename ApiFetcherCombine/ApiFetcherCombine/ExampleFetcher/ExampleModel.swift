@@ -8,5 +8,5 @@ struct ExampleApiResponseData: Decodable {
 
 struct ExampleModel: Decodable {
     let id: Int
-    let name: Int
+    let name: String
 }
