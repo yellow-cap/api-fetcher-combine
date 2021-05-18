@@ -8,7 +8,17 @@ struct ContentView: View {
     )
 
     var body: some View {
-        Text(viewModel.examples.isEmpty ? "Loading..." : "Loaded")
+        VStack {
+            if viewModel.examples.isEmpty {
+                Text("Loading...")
+            } else {
+                List {
+                    ForEach(viewModel.examples, id:\.self) { example in
+                        Text(example.name)
+                    }
+                }
+            }
+        }
                 .onAppear {
                     viewModel.fetchExamples()
                 }
