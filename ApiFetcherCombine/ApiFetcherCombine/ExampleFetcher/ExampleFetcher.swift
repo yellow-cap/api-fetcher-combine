@@ -16,7 +16,7 @@ class ExampleFetcher {
     func fetchExamples() throws -> AnyPublisher<[ExampleModel], ApiError> {
         let timeStamp = NSDate().timeIntervalSince1970
 
-            return try fetcher.request(
+            return fetcher.request(
                     type: ApiRequestType.get,
                     url: ExampleApiUrlBuilder.getHeroesUrl(),
                     headers: [:],
@@ -30,14 +30,19 @@ class ExampleFetcher {
                     .decode(type: ExampleApiResponse.self, decoder: decoder)
                     .map { $0.data.results }
                     .mapError { error in
-                        ApiError(
-                                sender: self,
-                                url: "",
-                                responseCode: 0,
-                                message: "Couldn't parse ExampleApiResponse from json",
-                                headers: [:],
-                                params: [:]
-                        )
+                        if let error = error as? ApiError {
+                            return error
+                        } else {
+                            // handle parse error
+                            return ApiError(
+                                    sender: self,
+                                    url: "",
+                                    responseCode: 0,
+                                    message: "Couldn't parse ExampleApiResponse from json",
+                                    headers: [:],
+                                    params: [:]
+                            )
+                        }
                     }
                     .eraseToAnyPublisher()
     }

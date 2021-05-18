@@ -12,7 +12,7 @@ protocol IApiFetcher {
             url: String,
             headers: [String: String],
             queryParams: [String: String]
-    ) throws -> AnyPublisher<Data, ApiError>
+    ) -> AnyPublisher<Data, ApiError>
 }
 
 class ApiFetcher: IApiFetcher {
@@ -22,17 +22,18 @@ class ApiFetcher: IApiFetcher {
             type: ApiRequestType,
             url: String,
             headers: [String: String],
-            queryParams: [String: String]) throws -> AnyPublisher<Data, ApiError> {
+            queryParams: [String: String]) -> AnyPublisher<Data, ApiError> {
 
         guard let url = buildRequestUrl(url: url, queryParams: queryParams) else {
-            throw ApiError(
+            return Fail(error: ApiError(
                     sender: self,
                     url: url,
                     responseCode: 0,
                     message: "Couldn't build url",
                     headers: headers,
                     params: queryParams
-            )
+            ))
+                    .eraseToAnyPublisher()
         }
 
         let request = buildRequest(url: url, type: type, headers: headers)
@@ -65,6 +66,7 @@ class ApiFetcher: IApiFetcher {
                 }
                 .mapError { error in
                     // handle specific errors
+
                     if let error = error as? ApiError {
                         return error
                     } else {
@@ -74,7 +76,8 @@ class ApiFetcher: IApiFetcher {
                                 responseCode: 0,
                                 message: "Unknown error occurred \(error.localizedDescription)",
                                 headers: headers,
-                                params: queryParams)
+                                params: queryParams
+                        )
                     }
                 }
                 .eraseToAnyPublisher()
