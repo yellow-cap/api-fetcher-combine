@@ -4,6 +4,7 @@ import Combine
 protocol IExampleFetcher {
     func fetchExamples() -> AnyPublisher<[ExampleModel], ApiError>
 }
+
 class ExampleFetcher {
     private let fetcher: IApiFetcher
     private let decoder: JSONDecoder
@@ -13,7 +14,7 @@ class ExampleFetcher {
         decoder = .init()
     }
 
-    func fetchExamples() throws -> AnyPublisher<[ExampleModel], ApiError> {
+    func fetchExamples() -> AnyPublisher<[ExampleModel], ApiError> {
         let timeStamp = NSDate().timeIntervalSince1970
 
             return fetcher.request(

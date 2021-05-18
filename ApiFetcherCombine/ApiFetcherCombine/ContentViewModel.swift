@@ -12,28 +12,24 @@ class ContentViewModel: ObservableObject {
     }
 
     func fetchExamples() {
-        do {
-            try fetcher.fetchExamples()
-                    .subscribe(on: DispatchQueue.global())
-                    .receive(on: DispatchQueue.main)
-                    .sink(
-                            receiveCompletion: { completion in
-                                switch completion {
-                                case .finished:
-                                    print("<<<DEV>>> Publisher completion finished")
-                                case .failure(let error):
-                                    // handle error on UI
-                                    print("<<<DEV>>> Publisher completion failure \(error.toString())")
-                                }
-                            },
-                            receiveValue: { [unowned self] result in
-                                print("<<<DEV>>> Publisher receiveValue \(result)")
-                                examples = result
+        fetcher.fetchExamples()
+                .subscribe(on: DispatchQueue.global())
+                .receive(on: DispatchQueue.main)
+                .sink(
+                        receiveCompletion: { completion in
+                            switch completion {
+                            case .finished:
+                                print("<<<DEV>>> Publisher completion finished")
+                            case .failure(let error):
+                                // handle error on UI
+                                print("<<<DEV>>> Publisher completion failure \(error.toString())")
                             }
-                    )
-                    .store(in: &cancellableSet)
-        } catch {
-            print("Error occurred \(error.localizedDescription)")
-        }
+                        },
+                        receiveValue: { [unowned self] result in
+                            print("<<<DEV>>> Publisher receiveValue \(result)")
+                            examples = result
+                        }
+                )
+                .store(in: &cancellableSet)
     }
 }
