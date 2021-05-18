@@ -12,61 +12,67 @@ protocol IApiFetcher {
             url: String,
             headers: [String: String],
             queryParams: [String: String]
-    ) -> Future<Data, Error>
+    ) throws -> AnyPublisher<Data, ApiError>
 }
 
 class ApiFetcher: IApiFetcher {
     private let session: URLSession = URLSession.shared
-    private var dataTaskPublishers = Set<AnyCancellable>()
 
     func request(
             type: ApiRequestType,
             url: String,
             headers: [String: String],
-            queryParams: [String: String]) -> Future<Data, Error> {
+            queryParams: [String: String]) throws -> AnyPublisher<Data, ApiError> {
 
-            return Future<Data, Error> { [weak self] promise in
+        guard let url = buildRequestUrl(url: url, queryParams: queryParams) else {
+            throw ApiError(
+                    sender: self,
+                    url: url,
+                    responseCode: 0,
+                    message: "Couldn't build url",
+                    headers: headers,
+                    params: queryParams
+            )
+        }
 
-                print("<<<DEV>>> Api fetcher: request started")
+        let request = buildRequest(url: url, type: type, headers: headers)
 
-                guard let self = self,
-                      let url = self.buildRequestUrl(url: url, queryParams: queryParams) else {
-
-                    print("<<<DEV>>> Api fetcher: request error")
-
-                    promise(.failure(ApiError(
-                            sender: self,
-                            url: url,
-                            responseCode: 0,
-                            headers: headers,
-                            params: queryParams))
-                    )
-
-                    return
-                }
-
-                let request = self.buildRequest(url: url, type: type, headers: headers)
-
-                let _ = self.session.dataTaskPublisher(for: request)
-                        .sink(
-                                receiveCompletion: { completion in
-                                    switch completion {
-                                    case .finished:
-                                        break
-                                    case .failure(let error):
-                                        print("<<<DEV>>> Api fetcher: receiveCompletion error \(error)")
-                                        promise(.failure(error))
-                                    }
-                                },
-                                receiveValue: { value in
-                                    print("<<<DEV>>> Api fetcher: receiveValue value data \(value.data)")
-                                    print("<<<DEV>>> Api fetcher: receiveValue value response \(value.response)")
-
-                                    promise(.success(value.data))
-                                }
+        return session.dataTaskPublisher(for: request)
+                .tryMap { data, response in
+                    guard let response = response as? HTTPURLResponse else {
+                        throw ApiError(
+                                sender: self,
+                                url: url.absoluteString,
+                                responseCode: 0,
+                                message: "Response is not HTTPURLResponse",
+                                headers: headers,
+                                params: queryParams
                         )
-                        .store(in: &self.dataTaskPublishers)
-            }
+                    }
+
+                    if response.statusCode != 200 {
+                        throw ApiError(
+                                sender: self,
+                                url: url.absoluteString,
+                                responseCode: response.statusCode,
+                                message: "Bad request",
+                                headers: headers,
+                                params: queryParams
+                        )
+                    }
+                    
+                    return data
+                }
+                .mapError { error in
+                    ApiError(
+                            sender: self,
+                            url: url.absoluteString,
+                            responseCode: 0,
+                            message: "Unknown error occurred \(error.localizedDescription)",
+                            headers: headers,
+                            params: queryParams)
+                }
+                .eraseToAnyPublisher()
     }
 
     private func buildRequestUrl(url: String, queryParams: [ParamKey: ParamValue]) -> URL? {

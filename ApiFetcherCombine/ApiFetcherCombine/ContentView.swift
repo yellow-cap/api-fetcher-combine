@@ -14,7 +14,11 @@ struct ContentView: View {
         Text("Hello, world!")
             .padding()
                 .onAppear {
-                    fetcher.fetchExample()
+                    do {
+                        try fetcher.fetchExample()
+                    } catch {
+                        print("Error on view: \(error)")
+                    }
                 }
     }
 }
