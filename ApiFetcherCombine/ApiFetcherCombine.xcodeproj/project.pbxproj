@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58C7A129859D73A0437BBBAE /* ExampleApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7A16400C34A27BFEA6691 /* ExampleApiKeys.swift */; };
 		58C7A37F66B9D3B7DFCDE0B7 /* ApiRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7AAEA932B9152D6105724 /* ApiRequestType.swift */; };
-		58C7A4C7CB6714396568A0AE /* ApiUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7A33F78587CF46F0C8F1B /* ApiUrlBuilder.swift */; };
-		58C7A5620A463E49C88AD681 /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7A492F85BFCF65E4134AF /* ApiKeys.swift */; };
+		58C7A83D1272CAEEE93EAB29 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7ABAD9B6A4245169EA1AE /* StringExtension.swift */; };
 		58C7A8B7F5311D805803BA86 /* ApiFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7AA4B3CAACE0FBB1902EC /* ApiFetcher.swift */; };
+		58C7A8E9DCC4668B974DBB6B /* ExapmleApiUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7AB26FD86AD3DFD0F7F3F /* ExapmleApiUrlBuilder.swift */; };
+		58C7AB6D7423D0810AD2449A /* ExampleFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7A07139F29179BCBC22AA /* ExampleFetcher.swift */; };
 		58C7AF9057A68660DC8B5B3F /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C7AA147987F3784A21482F /* ApiError.swift */; };
 		AC569E2026539251008CB47D /* ApiFetcherCombineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC569E1F26539251008CB47D /* ApiFetcherCombineApp.swift */; };
 		AC569E2226539251008CB47D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC569E2126539251008CB47D /* ContentView.swift */; };
@@ -38,11 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		58C7A33F78587CF46F0C8F1B /* ApiUrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiUrlBuilder.swift; sourceTree = "<group>"; };
-		58C7A492F85BFCF65E4134AF /* ApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
+		58C7A07139F29179BCBC22AA /* ExampleFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleFetcher.swift; sourceTree = "<group>"; };
+		58C7A16400C34A27BFEA6691 /* ExampleApiKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleApiKeys.swift; sourceTree = "<group>"; };
 		58C7AA147987F3784A21482F /* ApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		58C7AA4B3CAACE0FBB1902EC /* ApiFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiFetcher.swift; sourceTree = "<group>"; };
 		58C7AAEA932B9152D6105724 /* ApiRequestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequestType.swift; sourceTree = "<group>"; };
+		58C7AB26FD86AD3DFD0F7F3F /* ExapmleApiUrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExapmleApiUrlBuilder.swift; sourceTree = "<group>"; };
+		58C7ABAD9B6A4245169EA1AE /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		AC569E1C26539251008CB47D /* ApiFetcherCombine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApiFetcherCombine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC569E1F26539251008CB47D /* ApiFetcherCombineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiFetcherCombineApp.swift; sourceTree = "<group>"; };
 		AC569E2126539251008CB47D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,12 +86,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		58C7A3743B3EED755A1058B0 /* ExampleFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				58C7A07139F29179BCBC22AA /* ExampleFetcher.swift */,
+				58C7A16400C34A27BFEA6691 /* ExampleApiKeys.swift */,
+				58C7AB26FD86AD3DFD0F7F3F /* ExapmleApiUrlBuilder.swift */,
+			);
+			path = ExampleFetcher;
+			sourceTree = "<group>";
+		};
+		58C7AB0722D182BCEB1A8083 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				58C7ABAD9B6A4245169EA1AE /* StringExtension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		58C7ABDA22EC0637D8DA9C2D /* Api */ = {
 			isa = PBXGroup;
 			children = (
 				58C7AA4B3CAACE0FBB1902EC /* ApiFetcher.swift */,
-				58C7A33F78587CF46F0C8F1B /* ApiUrlBuilder.swift */,
-				58C7A492F85BFCF65E4134AF /* ApiKeys.swift */,
 				58C7AAEA932B9152D6105724 /* ApiRequestType.swift */,
 				58C7AA147987F3784A21482F /* ApiError.swift */,
 			);
@@ -123,6 +143,8 @@
 				AC569E2826539255008CB47D /* Info.plist */,
 				AC569E2526539255008CB47D /* Preview Content */,
 				58C7ABDA22EC0637D8DA9C2D /* Api */,
+				58C7A3743B3EED755A1058B0 /* ExampleFetcher */,
+				58C7AB0722D182BCEB1A8083 /* Utils */,
 			);
 			path = ApiFetcherCombine;
 			sourceTree = "<group>";
@@ -285,10 +307,12 @@
 				AC569E2226539251008CB47D /* ContentView.swift in Sources */,
 				AC569E2026539251008CB47D /* ApiFetcherCombineApp.swift in Sources */,
 				58C7A8B7F5311D805803BA86 /* ApiFetcher.swift in Sources */,
-				58C7A4C7CB6714396568A0AE /* ApiUrlBuilder.swift in Sources */,
-				58C7A5620A463E49C88AD681 /* ApiKeys.swift in Sources */,
 				58C7A37F66B9D3B7DFCDE0B7 /* ApiRequestType.swift in Sources */,
 				58C7AF9057A68660DC8B5B3F /* ApiError.swift in Sources */,
+				58C7AB6D7423D0810AD2449A /* ExampleFetcher.swift in Sources */,
+				58C7A83D1272CAEEE93EAB29 /* StringExtension.swift in Sources */,
+				58C7A129859D73A0437BBBAE /* ExampleApiKeys.swift in Sources */,
+				58C7A8E9DCC4668B974DBB6B /* ExapmleApiUrlBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
