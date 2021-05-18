@@ -14,15 +14,13 @@ class ExampleFetcher {
 
         let result = fetcher.request(
                 type: ApiRequestType.get,
-                url: ExapmleApiUrlBuilder.getHeroesUrl(),
+                url: ExampleApiUrlBuilder.getHeroesUrl(),
                 headers: [:],
                 queryParams: [
                     "apikey": ExampleApiKeys.publicKey,
                     "ts": "\(timeStamp)",
                     "hash": "\(timeStamp)\(ExampleApiKeys.privateKey)\(ExampleApiKeys.publicKey)"
-                            .md5(),
-                    "offset": "\(0)",
-                    "limit": "\(20)"
+                            .md5()
                 ]
         )
     }

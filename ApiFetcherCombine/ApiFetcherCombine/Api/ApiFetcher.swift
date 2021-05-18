@@ -17,6 +17,7 @@ protocol IApiFetcher {
 
 class ApiFetcher: IApiFetcher {
     private let session: URLSession = URLSession.shared
+    private var dataTaskPublishers = Set<AnyCancellable>()
 
     func request(
             type: ApiRequestType,
@@ -25,8 +26,13 @@ class ApiFetcher: IApiFetcher {
             queryParams: [String: String]) -> Future<Data, Error> {
 
             return Future<Data, Error> { [weak self] promise in
+
+                print("<<<DEV>>> Api fetcher: request started")
+
                 guard let self = self,
                       let url = self.buildRequestUrl(url: url, queryParams: queryParams) else {
+
+                    print("<<<DEV>>> Api fetcher: request error")
 
                     promise(.failure(ApiError(
                             sender: self,
@@ -59,6 +65,7 @@ class ApiFetcher: IApiFetcher {
                                     promise(.success(value.data))
                                 }
                         )
+                        .store(in: &self.dataTaskPublishers)
             }
     }
 

@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
+    let fetcher = ExampleFetcher(fetcher: ApiFetcher())
+
     var body: some View {
         Text("Hello, world!")
             .padding()
+                .onAppear {
+                    fetcher.fetchExample()
+                }
     }
 }
 
