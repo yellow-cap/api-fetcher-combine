@@ -11,7 +11,7 @@ class ExampleFetcher {
         decoder = .init()
     }
 
-    func fetchExample() throws -> AnyPublisher<ExampleApiResponse, ApiError> {
+    func fetchExample() throws -> AnyPublisher<[ExampleModel], ApiError> {
         let timeStamp = NSDate().timeIntervalSince1970
 
             return try fetcher.request(
@@ -26,6 +26,7 @@ class ExampleFetcher {
                     ]
             )
                     .decode(type: ExampleApiResponse.self, decoder: decoder)
+                    .map { $0.data.results }
                     .mapError { error in
                         ApiError(
                                 sender: self,

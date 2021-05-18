@@ -64,13 +64,18 @@ class ApiFetcher: IApiFetcher {
                     return data
                 }
                 .mapError { error in
-                    ApiError(
-                            sender: self,
-                            url: url.absoluteString,
-                            responseCode: 0,
-                            message: "Unknown error occurred \(error.localizedDescription)",
-                            headers: headers,
-                            params: queryParams)
+                    // handle specific errors
+                    if let error = error as? ApiError {
+                        return error
+                    } else {
+                        return ApiError(
+                                sender: self,
+                                url: url.absoluteString,
+                                responseCode: 0,
+                                message: "Unknown error occurred \(error.localizedDescription)",
+                                headers: headers,
+                                params: queryParams)
+                    }
                 }
                 .eraseToAnyPublisher()
     }
