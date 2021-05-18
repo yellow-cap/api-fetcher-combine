@@ -17,6 +17,7 @@
     * return AnyPublisher<[ExampleModel], ApiError>
     * forwards api errors from ApiFetcher
     * handles parsing errors
+2. Presentation layer
   * ContentViewModel
     * create publisher AnyPublisher<[ExampleModel], ApiError>
     * subscribes on publisher
